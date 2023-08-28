@@ -22,6 +22,34 @@ public class StudentRestController
         return studentRepository.findAll();
     }
 
+    @GetMapping("/studentByID/{id}")
+    public ResponseEntity<Student> getStudent(@PathVariable int id)
+    {
+        Optional<Student> studentOptional = studentRepository.findById(id);
+        if ( studentOptional.isPresent() )
+        {
+            return new ResponseEntity<>(studentOptional.get(), HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/studentByName/{name}")
+    public ResponseEntity<Student> getStudent(@PathVariable String name)
+    {
+        Optional<Student> studentOptional = studentRepository.findByName(name);
+        if ( studentOptional.isPresent() )
+        {
+            return new ResponseEntity<>(studentOptional.get(), HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("/student")
     @ResponseStatus(HttpStatus.CREATED)
     public Student createStudent(@RequestBody Student student)
@@ -38,6 +66,21 @@ public class StudentRestController
             student.setId(id);  // Set the ID on the incoming student object
             studentRepository.save(student);  // Save it, effectively updating the existing record
             return new ResponseEntity<>(student, HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/student/{id}")
+    public ResponseEntity<String> deleteStudent(@PathVariable int id)
+    {
+        Optional<Student> studentOptional = studentRepository.findById(id);
+        if (studentOptional.isPresent())
+        {
+            studentRepository.deleteById(id);
+            return ResponseEntity.ok("Student deleted");
         }
         else
         {
