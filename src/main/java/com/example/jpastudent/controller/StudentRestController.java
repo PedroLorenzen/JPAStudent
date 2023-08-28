@@ -6,11 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-<<<<<<< Updated upstream
-import org.springframework.web.client.HttpClientErrorException;
-=======
->>>>>>> Stashed changes
-
 import java.util.List;
 import java.util.Optional;
 
@@ -29,26 +24,11 @@ public class StudentRestController
 
     @PostMapping("/student")
     @ResponseStatus(HttpStatus.CREATED)
-<<<<<<< Updated upstream
-    public Student postStudent(@RequestBody Student student) {
-=======
     public Student createStudent(@RequestBody Student student)
     {
->>>>>>> Stashed changes
         System.out.println(student);
         return studentRepository.save(student);
     }
-
-<<<<<<< Updated upstream
-    @PutMapping("/student")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Student putStudent(@RequestBody Student student) {
-        System.out.println(student);
-        return studentRepository.save(student);
-    }
-
-
-=======
     @PutMapping("/student/{id}")
     public ResponseEntity<Student> putStudent(@PathVariable int id, @RequestBody Student student)
     {
@@ -64,5 +44,4 @@ public class StudentRestController
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
->>>>>>> Stashed changes
 }
